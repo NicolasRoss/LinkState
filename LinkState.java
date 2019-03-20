@@ -101,6 +101,8 @@ public class LinkState {
             }
             System.out.println(gateways.get(i) + "      " + key[gateways.get(i) - 1] + "      " + nextHop);
         }
+        
+        System.out.println();
     }
 
     public static void main(String args[]) {
