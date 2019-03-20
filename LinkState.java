@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class LinkState {
     static Scanner scanner = new Scanner(System.in);;
     static ArrayList<Integer> gateways;
+    static int prev[];
 
     static class Graph {
         int vertices;
@@ -53,10 +54,12 @@ public class LinkState {
         public int[] dijkstra(int source) {
             boolean[] spt = new boolean[vertices];
             int[] dist = new int[vertices];
+            prev = new int[vertices];
             int INFINITY = Integer.MAX_VALUE;
 
             for (int i = 0; i < vertices; i++) {
                 dist[i] = INFINITY;
+                prev[i] = 0;
             }
 
             dist[source] = 0;
@@ -69,14 +72,14 @@ public class LinkState {
                     if (adjMatrix[vert_u][vert_v] > 0) {
                         if (spt[vert_v] == false && adjMatrix[vert_u][vert_v] != -1) {
                             int newKey = adjMatrix[vert_u][vert_v] + dist[vert_u];
-
+                            
                             if (newKey < dist[vert_v]) {
                                 dist[vert_v] = newKey;
+                                prev[vert_v] = vert_u + 1;
                             }
                         }
                     }
                 }
-
             }
 
             return dist;
@@ -86,9 +89,17 @@ public class LinkState {
     public static void printGraph(int source, int[] key) {
         System.out.println("Forwarding table for " + (source + 1));
         System.out.println("To     Cost     Next Hop");
+        int nextHop = 0;
 
         for (int i = 0; i < gateways.size(); i++) {
-            System.out.println(gateways.get(i) + "      " + key[gateways.get(i) - 1]);
+            for (int j = 0; j < prev.length; j++) {
+                if (prev[j] == (source + 1)) {
+                    nextHop = j + 1;
+                    prev[j] = 0;
+                    break;
+                }
+            }
+            System.out.println(gateways.get(i) + "      " + key[gateways.get(i) - 1] + "      " + nextHop);
         }
     }
 
