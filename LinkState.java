@@ -88,7 +88,7 @@ public class LinkState {
 
     public static void printGraph(int source, int[] key) {
         System.out.println("Forwarding table for " + (source + 1));
-        System.out.println("To     Cost     Next Hop");
+        System.out.println("      To     Cost     Next Hop");
         int nextHop = 0;
 
         for (int i = 0; i < gateways.size(); i++) {
@@ -99,9 +99,10 @@ public class LinkState {
                     break;
                 }
             }
-            System.out.println(gateways.get(i) + "      " + key[gateways.get(i) - 1] + "      " + nextHop);
+            System.out.println("      " + gateways.get(i) + "      " 
+                + key[gateways.get(i) - 1] + "        " + nextHop);
         }
-        
+
         System.out.println();
     }
 
